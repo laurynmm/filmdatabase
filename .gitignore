@@ -6,3 +6,7 @@
 
 # pycache files
 __pycache__
+
+# coverage files for testing
+htmlcov
+.coverage
