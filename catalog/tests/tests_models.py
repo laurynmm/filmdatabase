@@ -103,11 +103,6 @@ class PersonModelTest(TestCase):
 class TestFilmModel(TestCase):
     @classmethod
     def setUpTestData(cls):
-        # Create people
-        wallace = Person.objects.create(first_name='Wallace', last_name='Shawn') # actor
-        andre = Person.objects.create(first_name='Andre', last_name='Gregory') # actor
-        louis = Person.objects.create(first_name='Louis', last_name='Malle') # director
-
         # Create genre & language
         test_genre = Genre.objects.create(name='Comedy')
         test_language = Language.objects.create(name='English')
@@ -121,12 +116,8 @@ class TestFilmModel(TestCase):
             language=test_language,
         )
 
-        # add genre, director and actors as post step
+        # add genre as post step
         Film.objects.get(id=1).genre.add(test_genre)
-        Film.objects.get(id=1).save()
-        Film.objects.get(id=1).director.add(louis)
-        Film.objects.get(id=1).save()
-        Film.objects.get(id=1).actors.add(wallace, andre)
         Film.objects.get(id=1).save()
 
     def test_film_title_max_length(self):
@@ -161,11 +152,6 @@ class TestFilmModel(TestCase):
 class TestReviewModel(TestCase):
     @classmethod
     def setUpTestData(cls):
-       # Create people
-        wallace = Person.objects.create(first_name='Wallace', last_name='Shawn') # actor
-        andre = Person.objects.create(first_name='Andre', last_name='Gregory') # actor
-        louis = Person.objects.create(first_name='Louis', last_name='Malle') # director
-
         # Create genre & language
         test_genre = Genre.objects.create(name='Comedy')
         test_language = Language.objects.create(name='English')
@@ -179,18 +165,13 @@ class TestReviewModel(TestCase):
             language=test_language,
         )
 
-        # add genre, director and actors as post step
+        # add genre as post step
         Film.objects.get(id=1).genre.add(test_genre)
-        Film.objects.get(id=1).save()
-        Film.objects.get(id=1).director.add(louis)
-        Film.objects.get(id=1).save()
-        Film.objects.get(id=1).actors.add(wallace, andre)
         Film.objects.get(id=1).save()
 
         # Create user
         test_user = User.objects.create(username='testuser', password='1z!Z2a@A')
         test_user.save()
-
 
     def test_object_string_is_rating_of_film_by_user(self):
         test_review = Review.objects.create(

@@ -2,9 +2,14 @@ import uuid
 import datetime
 
 from django.db import models
+from django.db.models.deletion import CASCADE
+from django.db.models.expressions import Case
+from django.db.models.fields import CharField
+from django.db.models.fields.related import ForeignKey
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils.translation import gettext_lazy as _
 
 class Genre(models.Model):
     """Model representing a film genre."""
@@ -47,17 +52,8 @@ class Film(models.Model):
     year = models.IntegerField(validators=[MinValueValidator(1890), MaxValueValidator(datetime.date.today().year)])
     imdb_id = models.CharField('IMDb id', max_length=200, unique=True)
 
-    # ManyToMany Field for genre
     genre = models.ManyToManyField(Genre, help_text='Select a genre for this film')
-
-    # Foreign Key used for language
     language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
-
-    # ManyToMany used for director(s)
-    director = models.ManyToManyField(Person, help_text='Select person or people who directed this film', related_name='director')
-
-    # ManyToMany used for actors
-    actors = models.ManyToManyField(Person, help_text='Select people who performed in this film', related_name='actors')
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this film"""
@@ -66,6 +62,26 @@ class Film(models.Model):
     def __str__(self):
         """String for representing this film"""
         return self.title
+
+class Credit(models.Model):
+    """Model representing a credit for a person who worked on a film"""
+    film = ForeignKey(Film, on_delete=CASCADE)
+    person = ForeignKey(Person, on_delete=CASCADE)
+
+    class JobTitle(models.IntegerChoices):
+        DIRECTOR = 1
+        ACTOR = 2
+
+    job_title = models.IntegerField(choices=JobTitle.choices)
+    if_actor_character_role = CharField(max_length=100, null=True, blank=True)
+
+    def get_absolute_url(self):
+        """Returns the url to acces a detail record for this credit"""
+        return reverse('credit-detail', args=[str(self.id)])
+
+    def __str__(self):
+        """String for representing the Model object"""
+        return self.get_job_title_display() + ": " + self.person.first_name + " " + self.person.last_name
 
 class Review(models.Model):
     """Model representing a review of a film by a user."""
@@ -85,7 +101,7 @@ class Review(models.Model):
         GREAT = 4
         AMAZING = 5
 
-    rating = models.IntegerField(choices=Reviews.choices, blank=False)
+    rating = models.IntegerField(choices=Reviews.choices, blank=False, default=0)
 
     class Meta:
         ordering = ['rating', 'film', 'date_watched']
