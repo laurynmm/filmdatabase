@@ -2,7 +2,7 @@
 <html lang="en">
 
     <head>
-        {% block title %}<title>Lauryn and Martin's film database</title>{% endblock %}
+        {% block title %}<title>Movie Jar</title>{% endblock %}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% load static %}
@@ -14,11 +14,8 @@
             <div>
             {% block sidebar %}
                 <ul class='sidebar-nav'>
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <hr></hr>
                     {% if user.is_authenticated %}
                     <li>Welcome {{ user.get_username }}!</li>
-                    <li><a href="{% url 'my-reviews' %}">My reviews</a></li>
                     <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
                     {% else %}
                     <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>

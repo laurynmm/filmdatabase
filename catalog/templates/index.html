@@ -1,22 +1,32 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h1>Movie Jar</h1>
-<hr>
-
-<form method="" action="{% url 'films' %}">
-    {{ form.as_table }}
-    <input type="submit" value="search film titles">
-</form>
-
-<hr>
 <h2>Films</h2>
+<hr>
+
+{% if user.is_authenticated %}
+<div>
+    <h3>Watched:</h3>
+    <ul>
+        {% for film in user_films %}
+        <li>{{ film }}</li>
+        {% endfor %}
+    </ul>
+</div>
+<div>
+    <h3>To Watch:</h3>
+    <ul>
+        {% for film in other_films %}
+        <li>{{ film }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
 <ul>
     {% for film in all_films %}
-    <li>
-        <a href="{{ film.get_absolute_url }}">{{ film.title }}</a>, {{ film.year }}
-    </li>
+    <li>{{ film }}</li>
     {% endfor %}
 </ul>
+{% endif %}
 
 {% endblock %}
