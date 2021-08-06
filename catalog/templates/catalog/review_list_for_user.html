@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>My Reviews</h1>
+    <hr>
+
+    <form method="" action="{% url 'my-reviews' %}">
+        {{ form.as_table }}
+        <input type="submit" value="search film titles">
+    </form>
+    <div><a href="{% url 'my-reviews' %}">clear filters</a></div>
+
+    <hr>
+    {% if review_list %}
+      <table>
+        <thead>
+            <tr>
+                <th scope="col">Film</th>
+                <th scope="col">Date Watched</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Update?</th>
+                <th scope="col">Delete?</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in review_list %}
+            <tr>
+                <td><a href="{{ review.film.get_absolute_url }}">{{ review.film }}</a></td>
+                <td>{{ review.date_watched }}</td>
+                <td>{{ review.rating }}</td>
+                <td><a href="{% url 'review-update' pk=review.id %}">Update</a></td>
+                <td><a href="{% url 'review-delete' pk=review.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+      <p>You haven't reviewed any films.</p>
+    {% endif %}
+{% endblock %}

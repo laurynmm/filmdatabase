@@ -1,0 +1,42 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Reviews</h1>
+
+{% if review_list %}
+<table>
+    <thead>
+        <tr>
+            <th scope="col">Film</th>
+            <th scope="col">User</th>
+            <th scope="col">Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for review in review_list %}
+        <tr>
+            <td><a href="{{ review.film.get_absolute_url }}">{{ review.film }}</a></td>
+            <td>{{ review.user }}</td>
+            <td>{{ review.rating }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>There are no reviews as specified in the database.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block filter %}
+
+<h3>Filters</h3>
+<div><a href="{% url 'reviews' %}">clear filters</a></div>
+<hr>
+<form method="GET" action="{% url 'reviews' %}">
+    {{ form.as_p }}
+    <input type="submit" value="search reviews">
+</form>
+
+{% endblock %}

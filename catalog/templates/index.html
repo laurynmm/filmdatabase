@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Movie Jar</h1>
+<hr>
+
+<form method="" action="{% url 'films' %}">
+    {{ form.as_table }}
+    <input type="submit" value="search film titles">
+</form>
+
+<hr>
+<h2>Films</h2>
+<ul>
+    {% for film in all_films %}
+    <li>
+        <a href="{{ film.get_absolute_url }}">{{ film.title }}</a>, {{ film.year }}
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

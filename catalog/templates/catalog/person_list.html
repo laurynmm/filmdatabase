@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>People list</h1>
+
+{% if person_list %}
+<ul>
+    {% for person in person_list %}
+    <li>
+        <a href="{{ person.get_absolute_url }}">{{ person.last_name }}, {{ person.first_name }}</a>, {{ person.date_of_birth }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There is no one that matches the search criteria the database.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block filter %}
+
+<h3>Filters</h3>
+<div><a href="{% url 'people' %}">clear filters</a></div>
+<hr>
+<form method="GET" action="{% url 'people' %}">
+    {{ form.as_p }}
+    <input type="submit" value="search people">
+</form>
+
+{% endblock %}

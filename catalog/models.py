@@ -48,12 +48,15 @@ class Person(models.Model):
 class Film(models.Model):
     """Model representing a film."""
     title = models.CharField(max_length=200)
-    plot = models.TextField(max_length=1000, help_text='Enter a brief description of the film')
+    plot = models.TextField(max_length=1000, help_text='Enter a brief description of the film', blank=True)
     year = models.IntegerField(validators=[MinValueValidator(1890), MaxValueValidator(datetime.date.today().year)])
-    imdb_id = models.CharField('IMDb id', max_length=200, unique=True)
+    imdb_id = models.CharField('IMDb id', max_length=200, unique=True, blank=True, null=True)
 
-    genre = models.ManyToManyField(Genre, help_text='Select a genre for this film')
+    genre = models.ManyToManyField(Genre, help_text='Select a genre for this film', blank=True)
     language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True)
+
+    class Meta:
+        ordering = ['title', 'year']
 
     def get_absolute_url(self):
         """Returns the url to access a detail record for this film"""

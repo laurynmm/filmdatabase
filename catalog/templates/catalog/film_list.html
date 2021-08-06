@@ -1,0 +1,27 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Films</h1>
+<hr>
+
+<form method="GET" action="{% url 'films' %}">
+    {{ form.as_table }}
+    <input type="submit" value="search titles">
+</form> 
+<div><a href="{% url 'films' %}">clear filters</a></div>
+
+<hr>
+{% if film_list %}
+<ul>
+    {% for film in film_list %}
+    <li>
+        <a href="{{ film.get_absolute_url }}">{{ film.title }}</a>, {{ film.year }}
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are no films matching your search in the database.</p>
+{% endif %}
+
+{% endblock %}

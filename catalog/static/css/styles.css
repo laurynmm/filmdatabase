@@ -1,0 +1,48 @@
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.main {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    min-height: 100%;
+}
+
+.sidebar-nav {
+    margin-block-start: 20px;
+    padding: 0;
+    list-style: none;
+    flex: 1;
+    width: 100px;
+}
+
+.content {
+    padding: 20px;
+    border: solid 1px black;
+    flex: 3;
+    background-color: lightsteelblue;
+}
+
+.content table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid black;
+    text-align: left;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    padding: 2px;
+}
+
+form {
+    padding: 15px;
+}

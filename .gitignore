@@ -10,3 +10,6 @@ __pycache__
 # coverage files for testing
 htmlcov
 .coverage
+
+# passwords for users created during development
+users.txt

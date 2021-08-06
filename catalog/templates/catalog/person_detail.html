@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h2>{{ person.first_name }} {{ person.last_name }}</h2>
+
+{% if person.date_of_birth %}
+<p>Born: {{ person.date_of_birth }}</p>
+{% endif %}
+
+{% if person.date_of_death %}
+<p>Date of death: {{ person.date_of_death }}</p>
+{% endif %}
+
+<hr>
+
+<h3>Credits</h3>
+{% if user.is_authenticated %}
+<a href="{% url 'film-create' %}">add film for credit</a>
+<br>
+<a href="{% url 'credit-create' %}">add credit</a>
+{% endif %}
+{% for credit in person.credit_set.all %}
+<hr>
+<p>
+    {{ credit.get_job_title_display }}: 
+    <a href="{{ credit.film.get_absolute_url }}">{{ credit.film }}</a> 
+    {% if credit.if_actor_character_role != null %} as {{ credit.if_actor_character_role }} {% endif %}
+</p>
+{% endfor %}
+
+{% endblock %}

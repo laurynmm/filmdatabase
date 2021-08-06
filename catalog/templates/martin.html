@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+{% for film in film_list %}
+<div>{{ film.title }}</div>
+{% endfor %}
+
+<div>GET: {{ request.GET }}</div>
+<div>POST: {{ request.POST }}</div>
+
+<div>errors: {{ form.is_valid }}  {{ form.is_bound }}</div>
+
+
+<form method="POST" action="{% url 'martin' %}">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form> 
+
+{% endblock %}

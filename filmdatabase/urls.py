@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')), # adds paths from film catalog application
     path('', RedirectView.as_view(url='catalog/', permanent=True)), # adds url maps to redirect to the base url to our application
+    path('accounts/', include('django.contrib.auth.urls')), # adds built-in user account urls
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # added for development web server while creaing site
