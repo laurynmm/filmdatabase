@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -28,4 +30,5 @@ class Review(models.Model):
 
     def __str__(self):
         """String for representing the Model object"""
-        return self.film.title + '; ' + self.date_watched + '; ' + self.user.get_username()
+        date = str(self.date_watched)
+        return self.film.title + '; ' + date + '; ' + self.user.get_username()

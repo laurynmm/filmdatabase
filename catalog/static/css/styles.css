@@ -5,33 +5,50 @@
 .main {
     display: flex;
     flex-flow: row wrap;
-    align-items: stretch;
-    min-height: 100%;
 }
 
-.sidebar-nav {
-    margin-block-start: 20px;
-    padding: 20px;
-    list-style: none;
-    width: 100px;
+.navbar {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #688EC0;
+    padding: 3px;
+}
+
+.navbar > p {
+    padding: 10px;
 }
 
 .content {
-    padding: 20px;
+    padding: 10px;
     border: solid 1px black;
     background-color: lightsteelblue;
-    display: flex;
-    flex-flow: row wrap;
+    width: 100%;
 }
 
-.content * {
-    margin: 5px;
+.content > div {
+    padding: 5px;
 }
 
 ul {
     list-style-type: none;
+    margin-block: 10px;
 }
 
 li {
     padding: 2px;
+}
+
+h3 {
+    margin-block: 10px;;
+}
+
+a:link {
+    color: #DECDB0;
+}
+
+a:visited {
+    color: #CFB68C;
 }

@@ -1,12 +1,17 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h2>Films</h2>
-<hr>
-
 {% if user.is_authenticated %}
 <div>
-    <h3>Watched:</h3>
+    <h3>Add film:</h3>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Add">
+    </form>
+</div>
+<div>
+    <h3>Films watched:</h3>
     <ul>
         {% for film in user_films %}
         <li>{{ film }}</li>
@@ -14,7 +19,7 @@
     </ul>
 </div>
 <div>
-    <h3>To Watch:</h3>
+    <h3>Films to watch:</h3>
     <ul>
         {% for film in other_films %}
         <li>{{ film }}</li>
@@ -22,6 +27,7 @@
     </ul>
 </div>
 {% else %}
+<h3>Films:</h3>
 <ul>
     {% for film in all_films %}
     <li>{{ film }}</li>
