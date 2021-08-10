@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .models import Film, Review
-from .forms import NewFilmForm
+from .forms import CreateReviewForm, NewFilmForm
 
 # Home page of site
 def index(request):
@@ -13,17 +13,21 @@ def index(request):
     if request.user.is_authenticated:
         user_films = Film.objects.filter(review__user=request.user)
         other_films = Film.objects.exclude(review__user=request.user)
-        form = NewFilmForm()
+        film_form = NewFilmForm()
+        review_form = CreateReviewForm()
         context = {
-            'form': form,
+            'film_form': film_form,
+            'review_form': review_form,
             'user_films': user_films,
             'other_films': other_films,
         }
     else:
         all_films = Film.objects.all()
-        form = NewFilmForm
+        film_form = NewFilmForm()
+        review_form = CreateReviewForm()
         context = {
-            'form': form,
+            'film_form': film_form,
+            'review_form': review_form,
             'all_films': all_films,
         }
 
@@ -39,5 +43,18 @@ def add_film(request):
         if Film.objects.filter(title__icontains=data).count() == 0:
             film = Film(title=data)
             film.save()
+    
+    return HttpResponseRedirect(reverse('index'))
+
+# Adding new reviews
+def add_review(request):
+    form = CreateReviewForm(request.POST)
+
+    if form.is_valid():
+        film = form.cleaned_data['film']
+        date = form.cleaned_data['date_watched']
+        user = request.user
+        review = Review(film=film, date_watched=date, user=user)
+        review.save()
     
     return HttpResponseRedirect(reverse('index'))
