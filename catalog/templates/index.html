@@ -4,7 +4,7 @@
 {% if user.is_authenticated %}
 <div>
     <h3>Add film:</h3>
-    <form action="" method="post">
+    <form action="{% url 'add-film' %}" method="post">
         {% csrf_token %}
         {{ form.as_table }}
         <input type="submit" value="Add">

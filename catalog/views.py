@@ -1,5 +1,7 @@
 
-from django.shortcuts import render, resolve_url
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from .models import Film, Review
 from .forms import NewFilmForm
@@ -7,17 +9,6 @@ from .forms import NewFilmForm
 # Home page of site
 def index(request):
     """View function for home page of site"""
-
-    # Adding a film to stored data
-    if request.method == 'POST':
-        form = NewFilmForm(request.POST)
-
-        if form.is_valid():
-            data = form.cleaned_data['title']
-            
-            if Film.objects.filter(title__icontains=data).count() == 0:
-                film = Film(title=data)
-                film.save()
 
     if request.user.is_authenticated:
         user_films = Film.objects.filter(review__user=request.user)
@@ -37,3 +28,16 @@ def index(request):
         }
 
     return render(request, 'index.html', context=context)
+
+# Adding new films
+def add_film(request):
+    form = NewFilmForm(request.POST)
+
+    if form.is_valid():
+        data = form.cleaned_data['title']
+            
+        if Film.objects.filter(title__icontains=data).count() == 0:
+            film = Film(title=data)
+            film.save()
+    
+    return HttpResponseRedirect(reverse('index'))
