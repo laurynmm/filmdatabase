@@ -51,10 +51,8 @@ def add_review(request):
     form = CreateReviewForm(request.POST)
 
     if form.is_valid():
-        film = form.cleaned_data['film']
-        date = form.cleaned_data['date_watched']
-        user = request.user
-        review = Review(film=film, date_watched=date, user=user)
-        review.save()
+        Review(film=cleaned_data['film'],
+               date_watched=form.cleaned_data['date_watched'],
+               user=request.user).save()
     
     return HttpResponseRedirect(reverse('index'))
