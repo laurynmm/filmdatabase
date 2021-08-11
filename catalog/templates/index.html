@@ -6,7 +6,7 @@
     <h3>Add film:</h3>
     <form action="{% url 'add-film' %}" method="post">
         {% csrf_token %}
-        {{ form.as_table }}
+        {{ film_form.as_table }}
         <input type="submit" value="Add">
     </form>
 </div>
@@ -22,9 +22,17 @@
     <h3>Films to watch:</h3>
     <ul>
         {% for film in other_films %}
-        <li>{{ film }}</li>
+        <li>{{ film }} <button onClick="fillReviewForm({{ film.id }})">WATCHED!</button></li>
         {% endfor %}
     </ul>
+</div>
+<div class="reviewform">
+    <h3>Add review:</h3>
+    <form id="reviewform", action="{% url 'add-review' %}" method="post">
+        {% csrf_token %}
+        {{ review_form.as_table }}
+        <input type="submit" value="Add">
+    </form>
 </div>
 {% else %}
 <h3>Films:</h3>
