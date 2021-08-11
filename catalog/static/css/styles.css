@@ -46,7 +46,7 @@ h3 {
 }
 
 a:link {
-    color: #DECDB0;
+    color: #d629b9;
 }
 
 a:visited {
@@ -55,4 +55,13 @@ a:visited {
 
 .reviewform {
     display: none;
+}
+
+ul ul {
+    font-size: small;
+    margin-block-start: 2px;
+}
+
+ul ul a:link {
+    font-style: italic;
 }
