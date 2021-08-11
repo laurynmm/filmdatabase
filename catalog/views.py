@@ -14,8 +14,8 @@ def index(request):
         user_films = Film.objects.filter(review__user=request.user)
         other_films = Film.objects.exclude(review__user=request.user)
         context = {
-            'film_form': film_form,
-            'review_form': review_form,
+            'film_form': NewFilmForm(),
+            'review_form': CreateReviewForm(),
             'user_films': user_films,
             'other_films': other_films,
         }
