@@ -24,8 +24,8 @@ def index(request):
         film_form = NewFilmForm()
         review_form = CreateReviewForm()
         context = {
-            'film_form': film_form,
-            'review_form': review_form,
+            'film_form': NewFilmForm(),
+            'review_form': CreateReviewForm(),
             'all_films': all_films,
         }
 
