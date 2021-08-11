@@ -13,8 +13,6 @@ def index(request):
     if request.user.is_authenticated:
         user_films = Film.objects.filter(review__user=request.user)
         other_films = Film.objects.exclude(review__user=request.user)
-        film_form = NewFilmForm()
-        review_form = CreateReviewForm()
         context = {
             'film_form': film_form,
             'review_form': review_form,
