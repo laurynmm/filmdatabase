@@ -21,8 +21,6 @@ def index(request):
         }
     else:
         all_films = Film.objects.all()
-        film_form = NewFilmForm()
-        review_form = CreateReviewForm()
         context = {
             'film_form': NewFilmForm(),
             'review_form': CreateReviewForm(),
