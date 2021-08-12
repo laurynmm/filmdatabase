@@ -14,8 +14,18 @@
     <h3>Films watched:</h3>
     <ul>
         {% for film in user_films %}
-        <li>{{ film }}</li>
+        <li>{{ film }} <button onClick="fillReviewForm({{ film.id }})">+</button></li>
+             <ul>
+                {% for review in user_reviews %}
+                    {% if review.film == film %}
+                    <li>
+                        {{ review.date_watched }} <a href="{% url 'delete-review' pk=review.id %}">delete</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
         {% endfor %}
+        </li>
     </ul>
 </div>
 <div>
