@@ -1,7 +1,8 @@
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Film, Review
 from .forms import CreateReviewForm, NewFilmForm
@@ -31,6 +32,7 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
+@login_required
 # Adding new films
 def add_film(request):
     form = NewFilmForm(request.POST)
@@ -44,6 +46,7 @@ def add_film(request):
     
     return HttpResponseRedirect(reverse('index'))
 
+@login_required
 # Adding new reviews
 def add_review(request):
     form = CreateReviewForm(request.POST)
@@ -55,9 +58,11 @@ def add_review(request):
     
     return HttpResponseRedirect(reverse('index'))
 
+@login_required
 # Delete review
 def delete_review(request, pk):
-    review = Review.objects.get(pk=pk)
+    review = get_object_or_404(Review, user=request.user, pk=pk)
+
     review.delete()
 
     return HttpResponseRedirect(reverse('index'))
