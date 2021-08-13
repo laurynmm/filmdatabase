@@ -1,3 +1,4 @@
+import datetime
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
@@ -5,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from .models import Film, Review
-from .forms import CreateReviewForm, NewFilmForm
+from .forms import CreateReviewForm, NewFilmForm, UpdateReviewForm
 
 # Home page of site
 def index(request):
@@ -17,7 +18,8 @@ def index(request):
         user_reviews = Review.objects.filter(user=request.user)
         context = {
             'film_form': NewFilmForm(),
-            'review_form': CreateReviewForm(),
+            'review_form': CreateReviewForm(initial={'date_watched':datetime.date.today()}),
+            'update_review_form': UpdateReviewForm(initial={'new_date':datetime.date.today()}),
             'user_films': user_films,
             'other_films': other_films,
             'user_reviews': user_reviews,
@@ -25,8 +27,6 @@ def index(request):
     else:
         all_films = Film.objects.all()
         context = {
-            'film_form': NewFilmForm(),
-            'review_form': CreateReviewForm(),
             'all_films': all_films,
         }
 
@@ -60,9 +60,29 @@ def add_review(request):
 
 @login_required
 # Delete review
-def delete_review(request, pk):
-    review = get_object_or_404(Review, user=request.user, pk=pk)
+def delete_review(request):
+    form = UpdateReviewForm(request.POST)
 
-    review.delete()
+    if form.is_valid():
+        review_id = form.cleaned_data['review']
+        review = Review.objects.get(pk=review_id)
+
+        if review.user == request.user:
+            review.delete()
+
+    return HttpResponseRedirect(reverse('index'))
+
+@login_required
+# Modify review date
+def update_review(request):
+    form = UpdateReviewForm(request.POST)
+
+    if form.is_valid():
+        review_id = form.cleaned_data['review']
+        review = Review.objects.get(pk=review_id)
+
+        if review.user == request.user:
+            review.date_watched = form.cleaned_data['new_date']
+            review.save()
 
     return HttpResponseRedirect(reverse('index'))

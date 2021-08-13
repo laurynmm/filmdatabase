@@ -13,8 +13,9 @@
     align-items: stretch;
     justify-content: space-between;
     width: 100%;
-    background-color: #688EC0;
-    padding: 3px;
+    background: linear-gradient(180deg, #688EC0, lightsteelblue 100%);
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
 }
 
 .navbar > p {
@@ -23,7 +24,6 @@
 
 .content {
     padding: 10px;
-    border: solid 1px black;
     background-color: lightsteelblue;
     width: 100%;
 }
@@ -46,20 +46,25 @@ h3 {
 }
 
 a:link {
-    color: #d629b9;
+    color: #4e0570;
 }
 
 a:visited {
-    color: #CFB68C;
+    color: #d629b9;
 }
 
-.reviewform {
+#reviewform {
+    display: none;
+}
+
+#updatereview {
     display: none;
 }
 
 ul ul {
     font-size: small;
     margin-block-start: 2px;
+    margin-block-end: 15px;
 }
 
 ul ul a:link {
