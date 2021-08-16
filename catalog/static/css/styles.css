@@ -55,10 +55,14 @@ a:visited {
 
 #reviewform {
     display: none;
+    background-color: azure;
+    padding: 5px;
 }
 
 #updatereview {
     display: none;
+    background-color: azure;
+    padding: 5px;
 }
 
 ul ul {

@@ -9,10 +9,7 @@ function showCreateForm(button, id_film, id_form) {
     form.style.display = "none";
     form.remove();
 
-    form.style.backgroundColor = 'azure';
-    form.style.padding = '5px';
     form.style.display = 'block';
-
     film.insertBefore(form, button.nextSibling);
 }
 
@@ -27,10 +24,8 @@ function showEditForm(button, id_review, id_form) {
 
     form.style.display = "none";
     form.remove();
-    form.style.backgroundColor = 'azure';
-    form.style.padding = '5px';
-    form.style.display = 'block';
 
+    form.style.display = 'block';
     review.appendChild(form);
 }
 
