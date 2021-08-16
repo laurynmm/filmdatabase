@@ -13,43 +13,52 @@
 <div>
     <h3>Films watched:</h3>
     <ul>
-        {% for film in user_films %}
-        <li>{{ film }} <button onClick="fillReviewForm({{ film.id }})">+</button></li>
-             <ul>
-                {% for review in user_reviews %}
-                    {% if review.film == film %}
-                    <li>
-                        {{ review.date_watched }} <a href="{% url 'delete-review' pk=review.id %}">delete</a>
-                    </li>
-                    {% endif %}
-                {% endfor %}
+    {% for film in user_films %}
+        <li>{{ film }} <button type="button" onClick="showCreateForm(this, {{ film.id }}, 'reviewform'); return false;">add</button>
+            <ul>
+            {% for review in user_reviews %}
+                {% if review.film == film %}
+                <li>
+                    {{ review.date_watched }} <button type="button" onClick="showEditForm(this, {{ review.id}}, 'updatereview')">edit</button>
+                </li>
+                {% endif %}
+            {% endfor %}
             </ul>
-        {% endfor %}
         </li>
+    {% endfor %}
     </ul>
 </div>
 <div>
     <h3>Films to watch:</h3>
     <ul>
-        {% for film in other_films %}
-        <li>{{ film }} <button onClick="fillReviewForm({{ film.id }})">WATCHED!</button></li>
-        {% endfor %}
+    {% for film in other_films %}
+        <li>{{ film }} <button type="button" onClick="showCreateForm(this, {{ film.id }}, 'reviewform')">add</button></li>
+    {% endfor %}
     </ul>
 </div>
-<div class="reviewform">
-    <h3>Add review:</h3>
-    <form id="reviewform", action="{% url 'add-review' %}" method="post">
-        {% csrf_token %}
-        {{ review_form.as_table }}
-        <input type="submit" value="Add">
-    </form>
-</div>
+
+<form id="reviewform" , action="{% url 'add-review' %}" method="post">
+    {% csrf_token %}
+    {{ review_form.as_ul }}
+    <input type="submit" value="Add Review">
+    <button type="button" onClick="hideForm('reviewform')">Cancel</button>
+</form>
+
+<form id="updatereview" action="{% url 'update-review' %}" method="post">
+    {% csrf_token %}
+    {{ update_review_form.as_ul }}
+    <input type="submit" value="Update Review">
+    <input type="submit" value="Delete Review" formaction="{% url 'delete-review' %}">
+    <button type="button" onClick="hideForm('updatereview')">Cancel</button>
+</form>
+
+
 {% else %}
 <h3>Films:</h3>
 <ul>
-    {% for film in all_films %}
+{% for film in all_films %}
     <li>{{ film }}</li>
-    {% endfor %}
+{% endfor %}
 </ul>
 {% endif %}
 
