@@ -4,7 +4,7 @@ from .models import Film, Review
 
 @admin.register(Film)
 class FilmAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('title', 'year')
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):

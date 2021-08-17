@@ -7,7 +7,7 @@ class TestFilmModel(TestCase):
     @classmethod
     def setUpTestData(cls):
         # Create film
-        Film.objects.create(title='My Dinner with Andre')
+        Film.objects.create(title='My Dinner with Andre', year=1981)
 
     def test_film_title_max_length(self):
         test_film = Film.objects.get(id=1)
