@@ -1,11 +1,16 @@
 import csv
 
 from django.core.management import BaseCommand
-
 from catalog.models import Film
 
+def film_from_row(row):
+    if row[3] == '\\N':
+      return Film(title=row[1])
+    else:
+      return Film(title=row[1], year=int(row[3][:4]))
+
 class Command(BaseCommand):
-  help = "Imports film information from csv file."
+  help = "Imports film information from properly formatted csv file."
 
   def add_arguments(self, parser):
     parser.add_argument("file_path", type=str)
@@ -15,13 +20,8 @@ class Command(BaseCommand):
     with open(file_path, newline='') as data:
         reader = csv.reader(data)
         next(reader)
-        films = []
-        for row in reader:
-            print(row)
-            if row[3] == '\\N':
-              films.append(Film(title=row[1]))
-            else:
-              films.append(Film(title=row[1], year=int(row[3][:4])))
+        films = [film_from_row(row) for row in reader]
+
         count = 0
         for film in films:
           obj, created = Film.objects.get_or_create(title=film.title, year=film.year)

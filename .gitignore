@@ -16,3 +16,6 @@ users.txt
 
 # npm
 node_modules
+
+# data
+data

@@ -23,7 +23,7 @@ def index(request):
             'film_form': NewFilmForm(),
             'review_form': CreateReviewForm(initial={'date_watched':datetime.date.today()}),
             'update_review_form': UpdateReviewForm(initial={'new_date':datetime.date.today()}),
-            'user_films': user_films,
+            'user_films': user_films,            
             'other_films': other_films,
             'user_reviews': user_reviews,
         }
@@ -90,17 +90,16 @@ def update_review(request):
 # Data api
 def api_films(request):
     url_parameter = request.GET.get("q")
+    API_FILM_SEARCH_LIMIT = 45
 
     if url_parameter:
         films = Film.objects \
             .filter(title__icontains=url_parameter) \
-            .order_by(Length('title').asc())[:45] \
+            .order_by(Length('title').asc())[:API_FILM_SEARCH_LIMIT] \
             .values()
-        list_of_film_data = list(films)
-        data = json.dumps(list_of_film_data)
 
-        return HttpResponse(data, content_type='application/json')
+        return HttpResponse(json.dumps(list(films)), content_type='application/json')
 
-    all_films = list(Film.objects.all().values())
-    data = json.dumps(all_films)
-    return HttpResponse(data, content_type='application/json')
+    all_films = list(Film.objects.all()[:API_FILM_SEARCH_LIMIT].values())
+
+    return HttpResponse(json.dumps(list(all_films)), content_type='application/json')

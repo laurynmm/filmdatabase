@@ -49,9 +49,6 @@ function searchBox(id, urlData) {
             searchField: 'title',
             sortField: 'title',
             create: false,
-            shouldLoad: function (query) {
-                return query.length >= 1;
-            },
             load: function (query, callback) {
                 var url = `${urlData}?q=${encodeURIComponent(query)}`;
                 fetch(url)
