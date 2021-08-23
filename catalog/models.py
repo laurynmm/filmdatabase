@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class Film(models.Model):
     """Model representing a film."""
     title = models.CharField(max_length=200)
+    year = models.IntegerField(null=True)
 
     class Meta:
         ordering = ['title']

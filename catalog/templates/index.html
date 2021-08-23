@@ -55,11 +55,10 @@
 
 {% else %}
 <h3>Films:</h3>
-<ul>
-{% for film in all_films %}
-    <li>{{ film }}</li>
-{% endfor %}
-</ul>
+<select id="select-junk" placeholder=""></select>
+<script>
+    searchBox('#select-junk', '{% url 'film-data' %}');
+</script>
 {% endif %}
 
 {% endblock %}

@@ -1,0 +1,22 @@
+{
+  "name": "filmdatabase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurynmm/filmdatabase.git"
+  },
+  "author": "Lauryn Menard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laurynmm/filmdatabase/issues"
+  },
+  "homepage": "https://github.com/laurynmm/filmdatabase#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
+}

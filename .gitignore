@@ -13,3 +13,9 @@ htmlcov
 
 # passwords for users created during development
 users.txt
+
+# npm
+node_modules
+
+# data
+data
