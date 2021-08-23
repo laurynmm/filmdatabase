@@ -17,7 +17,11 @@ class Command(BaseCommand):
         next(reader)
         films = []
         for row in reader:
-            films.append(Film(title=row[1], year=int(row[3][:4])))
+            print(row)
+            if row[3] == '\\N':
+              films.append(Film(title=row[1]))
+            else:
+              films.append(Film(title=row[1], year=int(row[3][:4])))
         count = 0
         for film in films:
           obj, created = Film.objects.get_or_create(title=film.title, year=film.year)

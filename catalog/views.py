@@ -1,9 +1,12 @@
 import datetime
+import json
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
+from django.db.models.functions import Length
 
 from .models import Film, Review
 from .forms import CreateReviewForm, NewFilmForm, UpdateReviewForm
@@ -25,10 +28,7 @@ def index(request):
             'user_reviews': user_reviews,
         }
     else:
-        all_films = Film.objects.all()
-        context = {
-            'all_films': all_films,
-        }
+        context = {}
 
     return render(request, 'index.html', context=context)
 
@@ -86,3 +86,21 @@ def update_review(request):
             review.save()
 
     return HttpResponseRedirect(reverse('index'))
+
+# Data api
+def api_films(request):
+    url_parameter = request.GET.get("q")
+
+    if url_parameter:
+        films = Film.objects \
+            .filter(title__icontains=url_parameter) \
+            .order_by(Length('title').asc())[:45] \
+            .values()
+        list_of_film_data = list(films)
+        data = json.dumps(list_of_film_data)
+
+        return HttpResponse(data, content_type='application/json')
+
+    all_films = list(Film.objects.all().values())
+    data = json.dumps(all_films)
+    return HttpResponse(data, content_type='application/json')

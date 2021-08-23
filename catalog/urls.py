@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('api/films/', views.api_films, name='film-data'),
     path('add_film/', views.add_film, name='add-film'),
     path('add_review/', views.add_review, name='add-review'),
     path('delete_review/', views.delete_review, name='delete-review'),
