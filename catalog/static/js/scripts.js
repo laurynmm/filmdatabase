@@ -4,14 +4,11 @@ function showCreateForm(button, id_film, id_form) {
     let film = button.parentElement;
     document.getElementById('id_film').value = id_film;
 
-    if (form.parentElement === film)
-        return;
-
     form.style.display = 'none';
     form.remove();
 
     form.style.display = 'block';
-    film.insertBefore(form, button.nextSibling);
+    film.appendChild(form);
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -38,10 +35,10 @@ function hideForm(formId) {
 }
 
 // eslint-disable-next-line no-unused-vars
-function searchBox(id, urlData) {
+function searchBox(id, urlData, forms) {
     window.addEventListener('load', () => {
     // eslint-disable-next-line no-undef
-        new TomSelect(id, {
+        new TomSelect(`#${id}`, {
             maxItems: 1,
             maxOptions: 100,
             valueField: 'id',
@@ -49,6 +46,15 @@ function searchBox(id, urlData) {
             searchField: 'title',
             sortField: 'title',
             create: false,
+            onItemAdd: function (value) {
+                const location = document.getElementById(id);
+                if (forms)
+                    showCreateForm(location, value, 'reviewform');
+            },
+            onItemRemove: function () {
+                if (forms)
+                    hideForm('reviewform');
+            },
             load: function (query, callback) {
                 var url = `${urlData}?q=${encodeURIComponent(query)}`;
                 fetch(url)

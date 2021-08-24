@@ -39,6 +39,7 @@ ul {
 
 li {
     padding: 2px;
+    list-style-type: none;
 }
 
 h3 {
@@ -57,6 +58,7 @@ a:visited {
     display: none;
     background-color: azure;
     padding: 5px;
+    margin: 12px;
 }
 
 #updatereview {

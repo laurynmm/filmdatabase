@@ -2,13 +2,13 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+<h3>Search films in database:</h3>
 <div>
-    <h3>Add film:</h3>
-    <form action="{% url 'add-film' %}" method="post">
-        {% csrf_token %}
-        {{ film_form.as_table }}
-        <input type="submit" value="Add">
-    </form>
+<select id="select-movie" placeholder=""></select>
+<script>
+    searchBox('select-movie', '{% url 'film-data' %}', true);
+
+</script>
 </div>
 <div>
     <h3>Films watched:</h3>
@@ -28,16 +28,9 @@
     {% endfor %}
     </ul>
 </div>
-<div>
-    <h3>Films to watch:</h3>
-    <ul>
-    {% for film in other_films %}
-        <li>{{ film }} <button type="button" onClick="showCreateForm(this, {{ film.id }}, 'reviewform')">add</button></li>
-    {% endfor %}
-    </ul>
-</div>
 
 <form id="reviewform" , action="{% url 'add-review' %}" method="post">
+    <h3>Add a review:</h3>
     {% csrf_token %}
     {{ review_form.as_ul }}
     <input type="submit" value="Add Review">
@@ -52,12 +45,11 @@
     <button type="button" onClick="hideForm('updatereview')">Cancel</button>
 </form>
 
-
 {% else %}
-<h3>Films:</h3>
-<select id="select-junk" placeholder=""></select>
+<h3>Search films in database:</h3>
+<select id="select-movie" placeholder=""></select>
 <script>
-    searchBox('#select-junk', '{% url 'film-data' %}');
+    searchBox('select-movie', '{% url 'film-data' %}', false);
 </script>
 {% endif %}
 
