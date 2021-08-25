@@ -17,14 +17,11 @@ def index(request):
 
     if request.user.is_authenticated:
         user_films = Film.objects.filter(review__user=request.user).distinct()
-        other_films = Film.objects.exclude(review__user=request.user)
         user_reviews = Review.objects.filter(user=request.user)
         context = {
-            'film_form': NewFilmForm(),
             'review_form': CreateReviewForm(initial={'date_watched':datetime.date.today()}),
             'update_review_form': UpdateReviewForm(initial={'new_date':datetime.date.today()}),
             'user_films': user_films,            
-            'other_films': other_films,
             'user_reviews': user_reviews,
         }
     else:
